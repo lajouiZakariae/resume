@@ -150,5 +150,18 @@
       "techStack": "React, Laravel, MySQL, Redis, Laravel Queue, AWS Lambda, Vercel",
       "description": "Developed an open-source API monitoring solution with automated health checks, alert notifications, and performance analytics using Laravel Queue system. Used by 200+ companies to monitor 5,000+ endpoints."
     }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "University of Washington",
+      "date": "2019",
+      "details": "GPA: 3.8/4.0 | Relevant Coursework: Data Structures, Web Development, Database Systems, Software Engineering"
+    },
+    {
+      "degree": "AWS Certified Solutions Architect - Associate",
+      "institution": "Amazon Web Services",
+      "date": "2023"
+    }
   ]
 }

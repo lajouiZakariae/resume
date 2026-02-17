@@ -1,7 +1,14 @@
 import { getResumeData } from "@/lib";
 
-const { name, role, information, workExperience, technicalSkills, projects } =
-  getResumeData();
+const {
+  name,
+  role,
+  information,
+  workExperience,
+  technicalSkills,
+  projects,
+  education,
+} = getResumeData();
 
 function removeProtocol(url: string) {
   return url.replace(/(^\w+:|^)\/\//, "");
@@ -131,37 +138,22 @@ export default function Home() {
       <section className="resume-section resume-section--compact">
         <h2 className="resume-section__heading">Education</h2>
         <div className="resume-section__content">
-          <article className="resume-education__item">
-            <div className="resume-education__header">
-              <div>
-                <div className="resume-education__degree">
-                  Bachelor of Science in Computer Science
+          {education.map((item, index) => (
+            <article key={index} className="resume-education__item">
+              <div className="resume-education__header">
+                <div>
+                  <div className="resume-education__degree">{item.degree}</div>
+                  <div className="resume-education__institution">
+                    {item.institution}
+                  </div>
                 </div>
-                <div className="resume-education__institution">
-                  University of Washington
-                </div>
+                <div className="resume-education__date">{item.date}</div>
               </div>
-              <div className="resume-education__date">2019</div>
-            </div>
-            <div className="resume-education__details">
-              GPA: 3.8/4.0 | Relevant Coursework: Data Structures, Web
-              Development, Database Systems, Software Engineering
-            </div>
-          </article>
-
-          <article className="resume-education__item">
-            <div className="resume-education__header">
-              <div>
-                <div className="resume-education__degree">
-                  AWS Certified Solutions Architect - Associate
-                </div>
-                <div className="resume-education__institution">
-                  Amazon Web Services
-                </div>
-              </div>
-              <div className="resume-education__date">2023</div>
-            </div>
-          </article>
+              {item.details && (
+                <div className="resume-education__details">{item.details}</div>
+              )}
+            </article>
+          ))}
         </div>
       </section>
 
