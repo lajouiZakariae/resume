@@ -1,10 +1,14 @@
 import { getResumeData } from "@/lib";
 
-const { name, role, information, workExperience, technicalSkills } =
+const { name, role, information, workExperience, technicalSkills, projects } =
   getResumeData();
 
+function removeProtocol(url: string) {
+  return url.replace(/(^\w+:|^)\/\//, "");
+}
+
 export default function Home() {
-  const websiteDomain = information.website.replace(/(^\w+:|^)\/\//, "");
+  const websiteDomain = removeProtocol(information.website);
 
   return (
     <div className="resume">
@@ -105,53 +109,22 @@ export default function Home() {
       <section className="resume-section resume-section--compact">
         <h2 className="resume-section__heading">Notable Projects</h2>
         <div className="resume-section__content">
-          <article className="resume-project">
-            <div className="resume-project__header">
-              <div className="resume-project__name">
-                DevCollab - Real-time Collaboration Platform
+          {projects.map((project) => (
+            <article key={project.name} className="resume-project">
+              <div className="resume-project__header">
+                <div className="resume-project__name">{project.name}</div>
+                <a href={project.link} className="resume-project__link">
+                  {removeProtocol(project.link)}
+                </a>
               </div>
-              <a
-                href="https://github.com/alexmorgan/devcollab"
-                className="resume-project__link"
-              >
-                github.com/alexmorgan/devcollab
-              </a>
-            </div>
-            <div className="resume-project__tech">
-              Tech Stack: Next.js, TypeScript, Laravel, Laravel Broadcasting,
-              Redis, MySQL, Docker
-            </div>
-            <div className="resume-project__description">
-              Built a real-time collaborative coding platform with live cursor
-              tracking, video chat, and code execution. Supports 10K+ concurrent
-              connections with optimized Laravel WebSocket architecture.
-              Featured on Product Hunt with 500+ upvotes.
-            </div>
-          </article>
-
-          <article className="resume-project">
-            <div className="resume-project__header">
-              <div className="resume-project__name">
-                OpenAPI Monitor - API Health Dashboard
+              <div className="resume-project__tech">
+                Tech Stack: {project.techStack}
               </div>
-              <a
-                href="https://github.com/alexmorgan/api-monitor"
-                className="resume-project__link"
-              >
-                github.com/alexmorgan/api-monitor
-              </a>
-            </div>
-            <div className="resume-project__tech">
-              Tech Stack: React, Laravel, MySQL, Redis, Laravel Queue, AWS
-              Lambda, Vercel
-            </div>
-            <div className="resume-project__description">
-              Developed an open-source API monitoring solution with automated
-              health checks, alert notifications, and performance analytics
-              using Laravel Queue system. Used by 200+ companies to monitor
-              5,000+ endpoints.
-            </div>
-          </article>
+              <div className="resume-project__description">
+                {project.description}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 

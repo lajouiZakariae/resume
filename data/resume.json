@@ -136,5 +136,19 @@
         "TDD"
       ]
     }
+  ],
+  "projects": [
+    {
+      "name": "DevCollab - Real-time Collaboration Platform",
+      "link": "https://github.com/alexmorgan/devcollab",
+      "techStack": "Next.js, TypeScript, Laravel, Laravel Broadcasting, Redis, MySQL, Docker",
+      "description": "Built a real-time collaborative coding platform with live cursor tracking, video chat, and code execution. Supports 10K+ concurrent connections with optimized Laravel WebSocket architecture. Featured on Product Hunt with 500+ upvotes."
+    },
+    {
+      "name": "OpenAPI Monitor - API Health Dashboard",
+      "link": "https://github.com/alexmorgan/api-monitor",
+      "techStack": "React, Laravel, MySQL, Redis, Laravel Queue, AWS Lambda, Vercel",
+      "description": "Developed an open-source API monitoring solution with automated health checks, alert notifications, and performance analytics using Laravel Queue system. Used by 200+ companies to monitor 5,000+ endpoints."
+    }
   ]
 }
