@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Morgan - Fullstack Web Developer</title>
+  <style>
+    /* ============================================
+       1. RESET & BASE STYLES
+       ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* CSS Custom Properties for consistent theming */
+    :root {
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #4a4a4a;
+      --color-text-tertiary: #6a6a6a;
+      --color-border: #e0e0e0;
+      --color-background: #ffffff;
+      
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      
+      --font-size-name: 32px;
+      --font-size-heading: 16px;
+      --font-size-subheading: 14px;
+      --font-size-body: 11px;
+      
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 12px;
+      --spacing-lg: 16px;
+      --spacing-xl: 24px;
+      
+      --line-height-tight: 1.3;
+      --line-height-normal: 1.5;
+      --line-height-relaxed: 1.6;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-normal);
+      color: var(--color-text-primary);
+      background-color: var(--color-background);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================
+       2. PRINT STYLES
+       ============================================ */
+    @media print {
+      @page {
+        size: letter;
+        margin: 0.5in;
+      }
+
+      body {
+        font-size: 10.5px;
+      }
+
+      .resume {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      /* Prevent page breaks within important elements */
+      .resume-experience__item,
+      .resume-project,
+      .resume-education__item {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Control page breaks */
+      .resume-section {
+        page-break-inside: avoid;
+      }
+
+      .resume-section__heading {
+        page-break-after: avoid;
+      }
+
+      /* Make links visible in print */
+      a {
+        text-decoration: none;
+        color: var(--color-text-primary);
+      }
+
+      a[href^="http"]:after {
+        content: "";
+      }
+    }
+
+    /* ============================================
+       3. LAYOUT COMPONENTS (BEM)
+       ============================================ */
+
+    /* Block: Resume Container */
+    .resume {
+      max-width: 8.5in;
+      margin: 0 auto;
+      padding: 40px;
+      background-color: var(--color-background);
+    }
+
+    /* Block: Resume Header */
+    .resume-header {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .resume-header__name {
+      font-size: var(--font-size-name);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .resume-header__title {
+      font-size: var(--font-size-heading);
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .resume-header__contact {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-sm) var(--spacing-lg);
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+    }
+
+    .resume-header__contact-item {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      gap: 4px;
+    }
+
+    .resume-header__contact-item a {
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+    }
+
+    .resume-header__contact-icon {
+      font-style: normal;
+      margin-right: 2px;
+    }
+
+    .resume-header__contact-separator {
+      color: var(--color-border);
+      margin: 0 var(--spacing-sm);
+    }
+
+    /* Block: Resume Section */
+    .resume-section {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .resume-section__heading {
+      font-size: var(--font-size-heading);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-xs);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .resume-section__content {
+      margin-top: var(--spacing-md);
+    }
+
+    /* Modifier: Compact Section */
+    .resume-section--compact {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    /* Block: Resume Experience */
+    .resume-experience__item {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .resume-experience__item:last-child {
+      margin-bottom: 0;
+    }
+
+    .resume-experience__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--spacing-xs);
+      flex-wrap: wrap;
+      gap: var(--spacing-xs) var(--spacing-md);
+    }
+
+    .resume-experience__title {
+      font-size: var(--font-size-subheading);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .resume-experience__company {
+      font-size: var(--font-size-body);
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .resume-experience__date {
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+      margin-left: auto;
+    }
+
+    .resume-experience__location {
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .resume-experience__description {
+      margin-top: var(--spacing-sm);
+    }
+
+    .resume-experience__description ul {
+      list-style-position: outside;
+      margin-left: 18px;
+    }
+
+    .resume-experience__description li {
+      margin-bottom: var(--spacing-xs);
+      line-height: var(--line-height-relaxed);
+      color: var(--color-text-primary);
+    }
+
+    .resume-experience__description li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Block: Resume Skills */
+    .resume-skills__category {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .resume-skills__category:last-child {
+      margin-bottom: 0;
+    }
+
+    .resume-skills__category-name {
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-xs);
+      font-size: var(--font-size-body);
+    }
+
+    .resume-skills__list {
+      color: var(--color-text-primary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Block: Resume Education */
+    .resume-education__item {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .resume-education__item:last-child {
+      margin-bottom: 0;
+    }
+
+    .resume-education__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs) var(--spacing-md);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .resume-education__degree {
+      font-size: var(--font-size-subheading);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .resume-education__institution {
+      font-size: var(--font-size-body);
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .resume-education__date {
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+      margin-left: auto;
+    }
+
+    .resume-education__details {
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Block: Resume Projects */
+    .resume-project {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .resume-project:last-child {
+      margin-bottom: 0;
+    }
+
+    .resume-project__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--spacing-xs);
+      flex-wrap: wrap;
+      gap: var(--spacing-xs) var(--spacing-md);
+    }
+
+    .resume-project__name {
+      font-size: var(--font-size-subheading);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .resume-project__link {
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      margin-left: auto;
+    }
+
+    .resume-project__tech {
+      font-size: var(--font-size-body);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-xs);
+      font-style: italic;
+    }
+
+    .resume-project__description {
+      font-size: var(--font-size-body);
+      color: var(--color-text-primary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Block: Resume Languages */
+    .resume-languages__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md) var(--spacing-xl);
+    }
+
+    .resume-languages__item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .resume-languages__dots {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .resume-languages__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid #4a4a4a;
+      background-color: transparent;
+      display: inline-block;
+    }
+
+    .resume-languages__dot--filled {
+      background-color: #4a4a4a;
+    }
+
+    .resume-languages__name {
+      font-size: var(--font-size-body);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .resume-languages__level {
+      font-size: var(--font-size-body);
+      color: var(--color-text-tertiary);
+    }
+
+    /* ============================================
+       4. UTILITY CLASSES
+       ============================================ */
+    .u-text-bold {
+      font-weight: 600;
+    }
+
+    .u-text-italic {
+      font-style: italic;
+    }
+
+    .u-margin-bottom-sm {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .u-margin-bottom-md {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .u-no-margin {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="resume">
+    <!-- Header Section -->
+    <header class="resume-header">
+      <h1 class="resume-header__name">Alex Morgan</h1>
+      <div class="resume-header__title">Fullstack Web Developer</div>
+      <div class="resume-header__contact">
+        <span class="resume-header__contact-item">
+          <span class="resume-header__contact-icon">✉</span>
+          <a href="/cdn-cgi/l/email-protection#4c2d2029346221233e2b2d220c29212d2520622f2321"><span class="__cf_email__" data-cfemail="cdaca1a8b5e3a0a2bfaaaca38da8a0aca4a1e3aea2a0">[email&#160;protected]</span></a>
+        </span>
+        <span class="resume-header__contact-separator">|</span>
+        <span class="resume-header__contact-item">
+          <span class="resume-header__contact-icon">☎</span>
+          (555) 987-6543
+        </span>
+        <span class="resume-header__contact-separator">|</span>
+        <span class="resume-header__contact-item">
+          <span class="resume-header__contact-icon">📍</span>
+          Seattle, WA
+        </span>
+        <span class="resume-header__contact-separator">|</span>
+        <span class="resume-header__contact-item">
+          <span class="resume-header__contact-icon">in</span>
+          <a href="https://linkedin.com/in/alexmorgan">/alexmorgan</a>
+        </span>
+        <span class="resume-header__contact-separator">|</span>
+        <span class="resume-header__contact-item">
+          <span class="resume-header__contact-icon">⌘</span>
+          <a href="https://github.com/alexmorgan">alexmorgan</a>
+        </span>
+        <span class="resume-header__contact-separator">|</span>
+        <span class="resume-header__contact-item">
+          <span class="resume-header__contact-icon">🌐</span>
+          <a href="https://alexmorgan.dev">alexmorgan.dev</a>
+        </span>
+      </div>
+    </header>
+
+    <!-- Professional Experience Section -->
+    <section class="resume-section">
+      <h2 class="resume-section__heading">Professional Experience</h2>
+      <div class="resume-section__content">
+        
+        <article class="resume-experience__item">
+          <div class="resume-experience__header">
+            <div>
+              <div class="resume-experience__title">Senior Fullstack Developer</div>
+              <div class="resume-experience__company">TechFlow Solutions | Seattle, WA</div>
+            </div>
+            <div class="resume-experience__date">January 2023 - Present</div>
+          </div>
+          <div class="resume-experience__description">
+            <ul>
+              <li>Architected and deployed 12+ Laravel APIs and Next.js applications, supporting 3M+ monthly active users with 99.9% uptime</li>
+              <li>Led migration from legacy PHP monolith to modern Laravel microservices with Next.js frontend, reducing page load time by 45% and improving SEO performance by 60%</li>
+              <li>Built real-time notification system using Laravel Broadcasting, Redis, and WebSockets, processing 500K+ events per hour with sub-100ms latency</li>
+              <li>Mentored team of 5 junior developers, establishing Laravel best practices and improving test coverage from 45% to 92% using PHPUnit and Pest</li>
+              <li>Implemented comprehensive CI/CD pipeline using GitHub Actions and Laravel Forge, reducing deployment time from 2 hours to 15 minutes</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="resume-experience__item">
+          <div class="resume-experience__header">
+            <div>
+              <div class="resume-experience__title">Fullstack Developer</div>
+              <div class="resume-experience__company">DataVision Inc. | Remote</div>
+            </div>
+            <div class="resume-experience__date">March 2021 - December 2022</div>
+          </div>
+          <div class="resume-experience__description">
+            <ul>
+              <li>Developed customer-facing analytics dashboard using Next.js, React, and Laravel API, serving 150K+ users across 40 countries</li>
+              <li>Optimized MySQL database queries and implemented Laravel Query caching strategies, reducing API response time by 70%</li>
+              <li>Built automated testing framework using PHPUnit, Pest, and Cypress, achieving 85% code coverage and reducing production bugs by 40%</li>
+              <li>Collaborated with UX team to redesign core application interface using Next.js Server Components, increasing user engagement metrics by 35%</li>
+              <li>Integrated third-party payment processing using Laravel Cashier (Stripe) and PayPal APIs, handling $2M+ in monthly transactions</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="resume-experience__item">
+          <div class="resume-experience__header">
+            <div>
+              <div class="resume-experience__title">Junior Web Developer</div>
+              <div class="resume-experience__company">StartupHub | San Francisco, CA</div>
+            </div>
+            <div class="resume-experience__date">June 2019 - February 2021</div>
+          </div>
+          <div class="resume-experience__description">
+            <ul>
+              <li>Developed and maintained responsive web applications using React and Laravel for 15+ client projects</li>
+              <li>Implemented RESTful APIs using Laravel API Resources and Eloquent ORM, supporting mobile and web applications with 50K+ daily requests</li>
+              <li>Collaborated with cross-functional teams using Agile methodologies, participating in daily standups and sprint planning</li>
+              <li>Created reusable React component library with Tailwind CSS, reducing development time for new features by 30%</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section class="resume-section resume-section--compact">
+      <h2 class="resume-section__heading">Technical Skills</h2>
+      <div class="resume-section__content">
+        
+        <div class="resume-skills__category">
+          <div class="resume-skills__category-name">Frontend:</div>
+          <div class="resume-skills__list">React, Next.js, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Shadcn UI, Redux, Zustand, React Query, Server Components, Responsive Design</div>
+        </div>
+
+        <div class="resume-skills__category">
+          <div class="resume-skills__category-name">Backend:</div>
+          <div class="resume-skills__list">Laravel, PHP, Eloquent ORM, RESTful APIs, Laravel Sanctum, Laravel Passport, API Resources, Queue Management, Event Broadcasting, WebSockets</div>
+        </div>
+
+        <div class="resume-skills__category">
+          <div class="resume-skills__category-name">Database:</div>
+          <div class="resume-skills__list">MySQL, PostgreSQL, Redis, Database Design, Eloquent Relationships, Query Optimization, Migrations, Seeders</div>
+        </div>
+
+        <div class="resume-skills__category">
+          <div class="resume-skills__category-name">DevOps & Tools:</div>
+          <div class="resume-skills__list">Docker, Laravel Forge, Laravel Vapor, Vercel, AWS (S3, CloudFront), GitHub Actions, CI/CD, Git, Composer, NPM, Linux, Nginx</div>
+        </div>
+
+        <div class="resume-skills__category">
+          <div class="resume-skills__category-name">Testing & Quality:</div>
+          <div class="resume-skills__list">PHPUnit, Pest, Jest, React Testing Library, Cypress, Feature Testing, Unit Testing, API Testing, TDD</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Notable Projects Section -->
+    <section class="resume-section resume-section--compact">
+      <h2 class="resume-section__heading">Notable Projects</h2>
+      <div class="resume-section__content">
+        
+        <article class="resume-project">
+          <div class="resume-project__header">
+            <div class="resume-project__name">DevCollab - Real-time Collaboration Platform</div>
+            <a href="https://github.com/alexmorgan/devcollab" class="resume-project__link">github.com/alexmorgan/devcollab</a>
+          </div>
+          <div class="resume-project__tech">Tech Stack: Next.js, TypeScript, Laravel, Laravel Broadcasting, Redis, MySQL, Docker</div>
+          <div class="resume-project__description">
+            Built a real-time collaborative coding platform with live cursor tracking, video chat, and code execution. Supports 10K+ concurrent connections with optimized Laravel WebSocket architecture. Featured on Product Hunt with 500+ upvotes.
+          </div>
+        </article>
+
+        <article class="resume-project">
+          <div class="resume-project__header">
+            <div class="resume-project__name">OpenAPI Monitor - API Health Dashboard</div>
+            <a href="https://github.com/alexmorgan/api-monitor" class="resume-project__link">github.com/alexmorgan/api-monitor</a>
+          </div>
+          <div class="resume-project__tech">Tech Stack: React, Laravel, MySQL, Redis, Laravel Queue, AWS Lambda, Vercel</div>
+          <div class="resume-project__description">
+            Developed an open-source API monitoring solution with automated health checks, alert notifications, and performance analytics using Laravel Queue system. Used by 200+ companies to monitor 5,000+ endpoints.
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="resume-section resume-section--compact">
+      <h2 class="resume-section__heading">Education</h2>
+      <div class="resume-section__content">
+        
+        <article class="resume-education__item">
+          <div class="resume-education__header">
+            <div>
+              <div class="resume-education__degree">Bachelor of Science in Computer Science</div>
+              <div class="resume-education__institution">University of Washington</div>
+            </div>
+            <div class="resume-education__date">2019</div>
+          </div>
+          <div class="resume-education__details">GPA: 3.8/4.0 | Relevant Coursework: Data Structures, Web Development, Database Systems, Software Engineering</div>
+        </article>
+
+        <article class="resume-education__item">
+          <div class="resume-education__header">
+            <div>              <div class="resume-education__degree">AWS Certified Solutions Architect - Associate</div>
+              <div class="resume-education__institution">Amazon Web Services</div>
+            </div>
+            <div class="resume-education__date">2023</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section class="resume-section resume-section--compact">
+      <h2 class="resume-section__heading">Languages</h2>
+      <div class="resume-section__content">
+        <div class="resume-languages__list">
+
+          <div class="resume-languages__item">
+            <div class="resume-languages__dots">
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+            </div>
+            <span class="resume-languages__name">Arabic</span>
+            <span class="resume-languages__level">Native</span>
+          </div>
+
+          <div class="resume-languages__item">
+            <div class="resume-languages__dots">
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot"></span>
+            </div>
+            <span class="resume-languages__name">English</span>
+            <span class="resume-languages__level">Professional</span>
+          </div>
+
+          <div class="resume-languages__item">
+            <div class="resume-languages__dots">
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot resume-languages__dot--filled"></span>
+              <span class="resume-languages__dot"></span>
+              <span class="resume-languages__dot"></span>
+            </div>
+            <span class="resume-languages__name">French</span>
+            <span class="resume-languages__level">Conversational</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
