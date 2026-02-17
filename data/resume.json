@@ -163,5 +163,22 @@
       "institution": "Amazon Web Services",
       "date": "2023"
     }
+  ],
+  "languages": [
+    {
+      "language": "Arabic",
+      "proficiency": "Native",
+      "level": 5
+    },
+    {
+      "language": "English",
+      "proficiency": "Professional",
+      "level": 4
+    },
+    {
+      "language": "French",
+      "proficiency": "Conversational",
+      "level": 3
+    }
   ]
 }

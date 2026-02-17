@@ -8,6 +8,7 @@ const {
   technicalSkills,
   projects,
   education,
+  languages,
 } = getResumeData();
 
 function removeProtocol(url: string) {
@@ -161,41 +162,27 @@ export default function Home() {
         <h2 className="resume-section__heading">Languages</h2>
         <div className="resume-section__content">
           <div className="resume-languages__list">
-            <div className="resume-languages__item">
-              <div className="resume-languages__dots">
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
+            {languages.map((language) => (
+              <div key={language.language} className="resume-languages__item">
+                <div className="resume-languages__dots">
+                  {[...Array(language.level)].map((_, index) => (
+                    <span
+                      key={index}
+                      className="resume-languages__dot resume-languages__dot--filled"
+                    ></span>
+                  ))}
+                  {[...Array(5 - language.level)].map((_, index) => (
+                    <span key={index} className="resume-languages__dot"></span>
+                  ))}
+                </div>
+                <span className="resume-languages__name">
+                  {language.language}
+                </span>
+                <span className="resume-languages__level">
+                  {language.proficiency}
+                </span>
               </div>
-              <span className="resume-languages__name">Arabic</span>
-              <span className="resume-languages__level">Native</span>
-            </div>
-
-            <div className="resume-languages__item">
-              <div className="resume-languages__dots">
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot"></span>
-              </div>
-              <span className="resume-languages__name">English</span>
-              <span className="resume-languages__level">Professional</span>
-            </div>
-
-            <div className="resume-languages__item">
-              <div className="resume-languages__dots">
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot resume-languages__dot--filled"></span>
-                <span className="resume-languages__dot"></span>
-                <span className="resume-languages__dot"></span>
-              </div>
-              <span className="resume-languages__name">French</span>
-              <span className="resume-languages__level">Conversational</span>
-            </div>
+            ))}
           </div>
         </div>
       </section>
