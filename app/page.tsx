@@ -1,9 +1,15 @@
+import { getResumeData } from "@/lib";
+
+const { name, role, information } = getResumeData();
+
 export default function Home() {
+  const websiteDomain = information.website.replace(/(^\w+:|^)\/\//, "");
+
   return (
     <div className="resume">
       <header className="resume-header">
-        <h1 className="resume-header__name">Alex Morgan</h1>
-        <div className="resume-header__title">Fullstack Web Developer</div>
+        <h1 className="resume-header__name">{name}</h1>
+        <div className="resume-header__title">{role}</div>
         <div className="resume-header__contact">
           <span className="resume-header__contact-item">
             <span className="resume-header__contact-icon">✉</span>
@@ -12,34 +18,36 @@ export default function Home() {
                 className="__cf_email__"
                 data-cfemail="cdaca1a8b5e3a0a2bfaaaca38da8a0aca4a1e3aea2a0"
               >
-                [email&#160;protected]
+                {information.email}
               </span>
             </a>
           </span>
           <span className="resume-header__contact-separator">|</span>
           <span className="resume-header__contact-item">
             <span className="resume-header__contact-icon">☎</span>
-            (555) 987-6543
+            {information.phone}
           </span>
           <span className="resume-header__contact-separator">|</span>
           <span className="resume-header__contact-item">
             <span className="resume-header__contact-icon">📍</span>
-            Seattle, WA
+            {information.location}
           </span>
           <span className="resume-header__contact-separator">|</span>
           <span className="resume-header__contact-item">
             <span className="resume-header__contact-icon">in</span>
-            <a href="https://linkedin.com/in/alexmorgan">/alexmorgan</a>
+            <a href={information.linkedIn.link}>
+              /{information.linkedIn.username}
+            </a>
           </span>
           <span className="resume-header__contact-separator">|</span>
           <span className="resume-header__contact-item">
             <span className="resume-header__contact-icon">⌘</span>
-            <a href="https://github.com/alexmorgan">alexmorgan</a>
+            <a href={information.github.link}>{information.github.username}</a>
           </span>
           <span className="resume-header__contact-separator">|</span>
           <span className="resume-header__contact-item">
             <span className="resume-header__contact-icon">🌐</span>
-            <a href="https://alexmorgan.dev">alexmorgan.dev</a>
+            <a href={information.website}>{websiteDomain}</a>
           </span>
         </div>
       </header>

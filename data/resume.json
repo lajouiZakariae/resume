@@ -1,4 +1,18 @@
 {
-  "name": "Alex Morgan",
-  "role": "Fullstack Web Developer"
+  "name": "Lajoui Zakariae",
+  "role": "Fullstack Web Developer",
+  "information": {
+    "email": "lajoui.zakariae.1@gmail.com",
+    "phone": "+212613080111",
+    "linkedIn": {
+      "link": "https://linkedin.com/in/alexmorgan",
+      "username": "alexmorgan"
+    },
+    "github": {
+      "link": "https://github.com/alexmorgan",
+      "username": "alexmorgan"
+    },
+    "website": "https://alexmorgan.dev",
+    "location": "Seattle, WA"
+  }
 }
