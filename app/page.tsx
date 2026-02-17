@@ -1,6 +1,7 @@
 import { getResumeData } from "@/lib";
 
-const { name, role, information } = getResumeData();
+const { name, role, information, workExperience, technicalSkills } =
+  getResumeData();
 
 export default function Home() {
   const websiteDomain = information.website.replace(/(^\w+:|^)\/\//, "");
@@ -55,182 +56,49 @@ export default function Home() {
       <section className="resume-section">
         <h2 className="resume-section__heading">Professional Experience</h2>
         <div className="resume-section__content">
-          <article className="resume-experience__item">
-            <div className="resume-experience__header">
-              <div>
-                <div className="resume-experience__title">
-                  Senior Fullstack Developer
+          {workExperience.map((experience) => (
+            <article
+              key={experience.company}
+              className="resume-experience__item"
+            >
+              <div className="resume-experience__header">
+                <div>
+                  <div className="resume-experience__title">
+                    {experience.title}
+                  </div>
+                  <div className="resume-experience__company">
+                    {experience.company} | {experience.location}
+                  </div>
                 </div>
-                <div className="resume-experience__company">
-                  TechFlow Solutions | Seattle, WA
-                </div>
-              </div>
-              <div className="resume-experience__date">
-                January 2023 - Present
-              </div>
-            </div>
-            <div className="resume-experience__description">
-              <ul>
-                <li>
-                  Architected and deployed 12+ Laravel APIs and Next.js
-                  applications, supporting 3M+ monthly active users with 99.9%
-                  uptime
-                </li>
-                <li>
-                  Led migration from legacy PHP monolith to modern Laravel
-                  microservices with Next.js frontend, reducing page load time
-                  by 45% and improving SEO performance by 60%
-                </li>
-                <li>
-                  Built real-time notification system using Laravel
-                  Broadcasting, Redis, and WebSockets, processing 500K+ events
-                  per hour with sub-100ms latency
-                </li>
-                <li>
-                  Mentored team of 5 junior developers, establishing Laravel
-                  best practices and improving test coverage from 45% to 92%
-                  using PHPUnit and Pest
-                </li>
-                <li>
-                  Implemented comprehensive CI/CD pipeline using GitHub Actions
-                  and Laravel Forge, reducing deployment time from 2 hours to 15
-                  minutes
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article className="resume-experience__item">
-            <div className="resume-experience__header">
-              <div>
-                <div className="resume-experience__title">
-                  Fullstack Developer
-                </div>
-                <div className="resume-experience__company">
-                  DataVision Inc. | Remote
+                <div className="resume-experience__date">
+                  {experience.startDate} - {experience.endDate}
                 </div>
               </div>
-              <div className="resume-experience__date">
-                March 2021 - December 2022
+              <div className="resume-experience__description">
+                <ul>
+                  {experience.responsibilities.map((responsibility) => (
+                    <li key={responsibility}>{responsibility}</li>
+                  ))}
+                </ul>
               </div>
-            </div>
-            <div className="resume-experience__description">
-              <ul>
-                <li>
-                  Developed customer-facing analytics dashboard using Next.js,
-                  React, and Laravel API, serving 150K+ users across 40
-                  countries
-                </li>
-                <li>
-                  Optimized MySQL database queries and implemented Laravel Query
-                  caching strategies, reducing API response time by 70%
-                </li>
-                <li>
-                  Built automated testing framework using PHPUnit, Pest, and
-                  Cypress, achieving 85% code coverage and reducing production
-                  bugs by 40%
-                </li>
-                <li>
-                  Collaborated with UX team to redesign core application
-                  interface using Next.js Server Components, increasing user
-                  engagement metrics by 35%
-                </li>
-                <li>
-                  Integrated third-party payment processing using Laravel
-                  Cashier (Stripe) and PayPal APIs, handling $2M+ in monthly
-                  transactions
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article className="resume-experience__item">
-            <div className="resume-experience__header">
-              <div>
-                <div className="resume-experience__title">
-                  Junior Web Developer
-                </div>
-                <div className="resume-experience__company">
-                  StartupHub | San Francisco, CA
-                </div>
-              </div>
-              <div className="resume-experience__date">
-                June 2019 - February 2021
-              </div>
-            </div>
-            <div className="resume-experience__description">
-              <ul>
-                <li>
-                  Developed and maintained responsive web applications using
-                  React and Laravel for 15+ client projects
-                </li>
-                <li>
-                  Implemented RESTful APIs using Laravel API Resources and
-                  Eloquent ORM, supporting mobile and web applications with 50K+
-                  daily requests
-                </li>
-                <li>
-                  Collaborated with cross-functional teams using Agile
-                  methodologies, participating in daily standups and sprint
-                  planning
-                </li>
-                <li>
-                  Created reusable React component library with Tailwind CSS,
-                  reducing development time for new features by 30%
-                </li>
-              </ul>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
       </section>
 
       <section className="resume-section resume-section--compact">
         <h2 className="resume-section__heading">Technical Skills</h2>
         <div className="resume-section__content">
-          <div className="resume-skills__category">
-            <div className="resume-skills__category-name">Frontend:</div>
-            <div className="resume-skills__list">
-              React, Next.js, TypeScript, JavaScript (ES6+), HTML5, CSS3,
-              Tailwind CSS, Shadcn UI, Redux, Zustand, React Query, Server
-              Components, Responsive Design
+          {technicalSkills.map((skill) => (
+            <div key={skill.category} className="resume-skills__category">
+              <div className="resume-skills__category-name">
+                {skill.category}:
+              </div>
+              <div className="resume-skills__list">
+                {skill.skills.join(", ")}
+              </div>
             </div>
-          </div>
-
-          <div className="resume-skills__category">
-            <div className="resume-skills__category-name">Backend:</div>
-            <div className="resume-skills__list">
-              Laravel, PHP, Eloquent ORM, RESTful APIs, Laravel Sanctum, Laravel
-              Passport, API Resources, Queue Management, Event Broadcasting,
-              WebSockets
-            </div>
-          </div>
-
-          <div className="resume-skills__category">
-            <div className="resume-skills__category-name">Database:</div>
-            <div className="resume-skills__list">
-              MySQL, PostgreSQL, Redis, Database Design, Eloquent Relationships,
-              Query Optimization, Migrations, Seeders
-            </div>
-          </div>
-
-          <div className="resume-skills__category">
-            <div className="resume-skills__category-name">DevOps & Tools:</div>
-            <div className="resume-skills__list">
-              Docker, Laravel Forge, Laravel Vapor, Vercel, AWS (S3,
-              CloudFront), GitHub Actions, CI/CD, Git, Composer, NPM, Linux,
-              Nginx
-            </div>
-          </div>
-
-          <div className="resume-skills__category">
-            <div className="resume-skills__category-name">
-              Testing & Quality:
-            </div>
-            <div className="resume-skills__list">
-              PHPUnit, Pest, Jest, React Testing Library, Cypress, Feature
-              Testing, Unit Testing, API Testing, TDD
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
