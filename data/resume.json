@@ -17,46 +17,25 @@
   },
   "workExperience": [
     {
-      "title": "Senior Fullstack Developer",
-      "company": "TechFlow Solutions",
-      "location": "Seattle, WA",
-      "startDate": "January 2023",
+      "title": "Fullstack Web Developer",
+      "company": "DevtiGroup",
+      "location": "Tangier, Morocco",
+      "startDate": "July 2023",
       "endDate": "Present",
       "responsibilities": [
-        "Architected and deployed 12+ Laravel APIs and Next.js applications, supporting 3M+ monthly active users with 99.9% uptime",
-        "Led migration from legacy PHP monolith to modern Laravel microservices with Next.js frontend, reducing page load time by 45% and improving SEO performance by 60%",
-        "Built real-time notification system using Laravel Broadcasting, Redis, and WebSockets, processing 500K+ events per hour with sub-100ms latency",
-        "Mentored team of 5 junior developers, establishing Laravel best practices and improving test coverage from 45% to 92% using PHPUnit and Pest",
-        "Implemented comprehensive CI/CD pipeline using GitHub Actions and Laravel Forge, reducing deployment time from 2 hours to 15 minutes"
+        
       ]
     },
     {
-      "title": "Fullstack Developer",
-      "company": "DataVision Inc.",
-      "location": "Remote",
-      "startDate": "March 2021",
-      "endDate": "December 2022",
-      "responsibilities": [
-        "Developed customer-facing analytics dashboard using Next.js, React, and Laravel API, serving 150K+ users across 40 countries",
-        "Optimized MySQL database queries and implemented Laravel Query caching strategies, reducing API response time by 70%",
-        "Built automated testing framework using PHPUnit, Pest, and Cypress, achieving 85% code coverage and reducing production bugs by 40%",
-        "Collaborated with UX team to redesign core application interface using Next.js Server Components, increasing user engagement metrics by 35%",
-        "Integrated third-party payment processing using Laravel Cashier (Stripe) and PayPal APIs, handling $2M+ in monthly transactions"
-      ]
-    },
-    {
-      "title": "Junior Web Developer",
-      "company": "StartupHub",
-      "location": "San Francisco, CA",
-      "startDate": "June 2019",
-      "endDate": "February 2021",
-      "responsibilities": [
-        "Developed and maintained responsive web applications using React and Laravel for 15+ client projects",
-        "Implemented RESTful APIs using Laravel API Resources and Eloquent ORM, supporting mobile and web applications with 50K+ daily requests",
-        "Collaborated with cross-functional teams using Agile methodologies, participating in daily standups and sprint planning",
-        "Created reusable React component library with Tailwind CSS, reducing development time for new features by 30%"
-      ]
-    }
+  "title": "Fullstack Web Developer (Internship)",
+  "company": "DevtiGroup",
+  "location": "Tangier, Morocco",
+  "startDate": "April 2023",
+  "endDate": "July 2023",
+  "responsibilities": [
+    "Designed and developed a full-stack e-commerce dashboard for store management and analytics.",
+    "Built and integrated RESTful APIs to power the front store and admin dashboard.",
+   } 
   ],
   "technicalSkills": [
     {
